@@ -1,0 +1,22 @@
+az group delete --name memsql-cluster-rg
+
+./vm-deploy.py -s 9bf7dac2-b53c-4c3a-8159-9ee21a9f08f0 -n memsql-cluster -c 3 -d 2 -D 512
+
+./vm-deploy.py -s 9bf7dac2-b53c-4c3a-8159-9ee21a9f08f0 -n memsql-cluster -c 1 -d 2 -D 512
+
+az network nic create --name ClickDVMNic-0 --resource-group memsql-cluster3-rg --location westus2 --subnet MemSQLBackEnd --vnet-name MemSQLVNet --private-ip-address 192.168.1.101 --public-ip-address PIPMemSQL1 --network-security-group NSG-ClickDMemSQL
+
+
+
+Availability set 'avs-memsql' does not exist.
+Traceback (most recent call last):
+  File "./vm-deploy.py", line 163, in <module>
+    vm_create = sp.check_output(azcmd, universal_newlines=True)
+  File "/usr/lib/python3.5/subprocess.py", line 626, in check_output
+    **kwargs).stdout
+  File "/usr/lib/python3.5/subprocess.py", line 708, in run
+    output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['az', 'vm', 'create', '-n', 'memsql-vm-1', '--admin-username', 'memsqladmin', '--resource-group', 'memsql-cluster', '--ssh-key-value', 'memsql-cluster/id_rsa.pub', '--size', 'Standard_F4', '--storage-sku', 'Standard_LRS', '--vnet-name', 'MemSQLVNet', '--subnet', 'MemSQLBackEnd', '--location', 'West US 2', '--availability-set', 'avs-memsql', '--nics', 'ClickDVMNic-0', '--image', 'Canonical:UbuntuServer:16.04-LTS:latest']' returned non-zero exit status 1
+
+
+

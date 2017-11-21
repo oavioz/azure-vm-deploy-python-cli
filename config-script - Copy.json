@@ -1,0 +1,4 @@
+{
+	"fileUris": ["https://sademodata.blob.core.windows.net/scripts/bash/az-diskPark.sh"],
+	"commandToExecute": "bash diskPart.sh"
+}
